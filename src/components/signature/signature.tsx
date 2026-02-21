@@ -4,7 +4,7 @@ export const Signature = () => {
       <p className="text-sm text-slate-500">
         Desenvolvido por: <span className="font-bold">Fernando Maleiane</span>
       </p>
-      <div className="flex justify-between text-sky-500 px-4">
+      <div className="flex flex-col md:flex-row justify-between text-sky-500 px-4">
         <a href="https://github.com/maleianefernando/">Github</a>
         <a href="https://www.linkedin.com/in/fernando-maleiane-bb2078296/">
           Linkedin
