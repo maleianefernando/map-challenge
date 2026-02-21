@@ -6,6 +6,7 @@ import MapView from "./components/map-view";
 function App() {
   const [users, setUsers] = useState<user[]>([]);
   const [loading, setLoading] = useState(true);
+  const [locationError, setLocationError] = useState("");
 
   useEffect(() => {
     // listen for updated list
@@ -23,6 +24,13 @@ function App() {
         });
       },
       (error) => {
+        if (error.code === error.PERMISSION_DENIED) {
+          setLocationError("Permissão de localização não concedida.");
+        } else if (error.code === error.POSITION_UNAVAILABLE) {
+          setLocationError("Localização indisponível.");
+        } else if (error.code === error.TIMEOUT) {
+          setLocationError("Tempo de espera excedido.");
+        }
         console.error("Erro de localização:", error);
       },
       { enableHighAccuracy: true },
@@ -43,12 +51,15 @@ function App() {
 
   return (
     <div className="min-w-screen min-h-screen p-6">
+      <div className="border-b border-blue-300 bg-blue-100 p-4 last:border-0 rounded-md mb-6">
+        <span className="text-slate-500 text-sm"> A demora no processamento dos resultados e causada pela latência do servidor que fica adormecido após registar inatividade. Podendo levar até 60 segundos para reestabelecer a conexão com o servidor.</span>
+      </div>
       <>
-        <div className="border border-slate-600 rounded-md space-y-4">
+        <div className="border border-blue-300 rounded-md space-y-4 mb-6 p-4">
           {users.map((user, index) => (
             <div
               key={user.id}
-              className="border-b border-slate-600 p-4 last:border-0 rounded-md"
+              className="border border-blue-100 bg-sky-50 p-4 rounded-md m-1"
             >
               <p>
                 <strong>ID:</strong> {`Utilizador ${index + 1}`}
@@ -64,7 +75,16 @@ function App() {
 
           {loading && (
             <div className="border-b border-slate-600 p-4 last:border-0 rounded-md">
-              <span className="animate-ping text-slate-500"> Aguarde ... </span>
+              <span className="animate-ping text-slate-500">
+                {" "}
+                A procurar ...{" "}
+              </span>
+            </div>
+          )}
+
+          {locationError.length > 0 && (
+            <div className="border-b border-red-300 bg-red-100 p-4 last:border-0 rounded-md mt-6">
+              <span className="text-slate-500"> {locationError} </span>
             </div>
           )}
         </div>
