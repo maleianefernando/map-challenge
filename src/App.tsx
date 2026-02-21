@@ -11,6 +11,7 @@ function App() {
     // listen for updated list
     socket.on("usersUpdate", (data) => {
       setUsers(data);
+      setLoading(true);
     });
 
     //Ask for location
@@ -36,38 +37,38 @@ function App() {
     socket.on("usersUpdate", (data) => {
       if (data.length == users.length) {
         setLoading(false);
-      } else {
-        setLoading(true);
       }
     });
   }, [users]);
 
   return (
     <div className="min-w-screen min-h-screen p-6">
-      {loading ? (
-        <>Aguarde ...</>
-      ) : (
-        <>
-          <div className="border border-slate-600 rounded-md space-y-4">
-            {users.map((user, index) => (
-              <div
-                key={user.id}
-                className="border-b border-slate-600 p-4 last:border-0 rounded-md"
-              >
-                <p>
-                  <strong>ID:</strong> {`Utilizador ${index + 1}`}
-                </p>
-                <p>
-                  <strong>Latitude:</strong> {user.location.latitude}
-                </p>
-                <p>
-                  <strong>Longitude:</strong> {user.location.longitude}
-                </p>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+      <>
+        <div className="border border-slate-600 rounded-md space-y-4">
+          {users.map((user, index) => (
+            <div
+              key={user.id}
+              className="border-b border-slate-600 p-4 last:border-0 rounded-md"
+            >
+              <p>
+                <strong>ID:</strong> {`Utilizador ${index + 1}`}
+              </p>
+              <p>
+                <strong>Latitude:</strong> {user.location.latitude}
+              </p>
+              <p>
+                <strong>Longitude:</strong> {user.location.longitude}
+              </p>
+            </div>
+          ))}
+
+          {loading && (
+            <div className="border-b border-slate-600 p-4 last:border-0 rounded-md">
+              <span className="animate-ping text-slate-500"> Aguarde ... </span>
+            </div>
+          )}
+        </div>
+      </>
       <MapView users={users} />
     </div>
   );
