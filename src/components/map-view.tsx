@@ -4,7 +4,7 @@ import type { user } from "../types/types";
 
 function MapView({ users }: { users: user[] }) {
   return (
-    <MapContainer center={[0, 0]} zoom={2} style={{ height: "90vh" }}>
+    <MapContainer center={[0, 0]} zoom={2} style={{ height: "50vh" }}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
       {users.map((user) =>

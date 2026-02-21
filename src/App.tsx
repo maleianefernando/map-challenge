@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { user } from "./types/types";
 import socket from "./utils/socket";
 import MapView from "./components/map-view";
+import { Signature } from "./components/signature/signature";
 
 function App() {
   const [users, setUsers] = useState<user[]>([]);
@@ -99,6 +100,8 @@ function App() {
         </div>
       </>
       <MapView users={users} />
+
+      <Signature />
     </div>
   );
 }
