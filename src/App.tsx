@@ -15,6 +15,10 @@ function App() {
       setLoading(true);
     });
 
+    if (!navigator.geolocation) {
+      setLocationError("Geolocalização não suportada neste dispositivo.");
+    }
+
     //Ask for location
     navigator.geolocation.watchPosition(
       (position) => {
@@ -52,7 +56,12 @@ function App() {
   return (
     <div className="min-w-screen min-h-screen p-6">
       <div className="border-b border-blue-300 bg-blue-100 p-4 last:border-0 rounded-md mb-6">
-        <span className="text-slate-500 text-sm"> A demora no processamento dos resultados e causada pela latência do servidor que fica adormecido após registar inatividade. Podendo levar até 60 segundos para reestabelecer a conexão com o servidor.</span>
+        <span className="text-slate-500 text-sm">
+          {" "}
+          A demora no processamento dos resultados e causada pela latência do
+          servidor que fica adormecido após registar inatividade. Podendo levar
+          até 60 segundos para reestabelecer a conexão com o servidor.
+        </span>
       </div>
       <>
         <div className="border border-blue-300 rounded-md space-y-4 mb-6 p-4">
